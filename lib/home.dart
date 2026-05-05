@@ -11,6 +11,60 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  static const double _categoryIconSize = 64;
+
+  String _categoryIconAsset(String category) {
+    final fileName = '${category.replaceAll(' ', '-')}.png';
+    return 'icons/$fileName';
+  }
+
+  Widget _buildCategoryCard(BuildContext context, String category, int wordCount) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        child: Row(
+          children: [
+            SizedBox(
+              width: _categoryIconSize,
+              height: _categoryIconSize,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  _categoryIconAsset(category),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const ColoredBox(
+                      color: Color(0x11000000),
+                      child: Center(
+                        child: Icon(Icons.category_outlined, size: 32),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(category, style: Theme.of(context).textTheme.titleMedium),
+                  const SizedBox(height: 6),
+                  Text(
+                    '$wordCount words',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final flashcardsProvider = context.watch<FlashcardsProvider>();
@@ -39,16 +93,12 @@ class _HomeState extends State<Home> {
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              Text('Categories', style: Theme.of(context).textTheme.headlineSmall),
-              const SizedBox(height: 12),
+              // Text('Categories', style: Theme.of(context).textTheme.headlineSmall),
+              // const SizedBox(height: 12),
               ...grouped.entries.map(
-                (entry) => Card(
-                  child: ListTile(
-                    title: Text(entry.key),
-                    subtitle: Text('${entry.value.length} words'),
-                  ),
-                ),
+                (entry) => _buildCategoryCard(context, entry.key, entry.value.length),
               ),
+              const SizedBox(height: 20),
             ],
           );
         },
