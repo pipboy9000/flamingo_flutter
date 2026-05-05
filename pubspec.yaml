@@ -70,7 +70,8 @@ flutter:
   assets:
     - output/dataset.json
     - output/audio/
-    - icons/
+    - images/icons/
+    - images/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
