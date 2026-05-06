@@ -14,7 +14,9 @@ class _DrawerRow {
 }
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+  const AppDrawer({super.key, required this.onWordSelected});
+
+  final void Function(Flashcard word) onWordSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +75,7 @@ class AppDrawer extends StatelessWidget {
                       // subtitle: Text(word.translated),
                       onTap: () {
                         Navigator.pop(context);
+                        onWordSelected(word);
                       },
                     );
                   },
