@@ -16,15 +16,90 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   static const double _categoryIconSize = 64;
+  final Random _random = Random();
 
   Flashcard? _selectedFlashcard;
+  String? _activeCategory;
+  final Map<String, List<Flashcard>> _remainingByCategory = {};
 
   void _showFlashcard(Flashcard card) {
-    setState(() => _selectedFlashcard = card);
+    setState(() {
+      _selectedFlashcard = card;
+      _activeCategory = card.category;
+    });
   }
 
   void _showHome() {
-    setState(() => _selectedFlashcard = null);
+    setState(() {
+      _selectedFlashcard = null;
+      _activeCategory = null;
+    });
+  }
+
+  void _startCategorySession(List<Flashcard> words, {Flashcard? initial}) {
+    if (words.isEmpty) return;
+
+    final category = words.first.category;
+    final remaining = List<Flashcard>.from(words);
+    late final Flashcard selected;
+
+    if (initial != null) {
+      selected = initial;
+      remaining.removeWhere((card) => card.id == initial.id);
+    } else {
+      final index = _random.nextInt(remaining.length);
+      selected = remaining.removeAt(index);
+    }
+
+    setState(() {
+      _selectedFlashcard = selected;
+      _activeCategory = category;
+      _remainingByCategory[category] = remaining;
+    });
+  }
+
+  List<Flashcard> _categoryWords(
+    FlashcardsProvider flashcardsProvider,
+    String category,
+  ) {
+    return flashcardsProvider.groupedByCategory.values
+        .expand((items) => items)
+        .where((word) => word.category == category)
+        .toList();
+  }
+
+  void _showWordFromDrawer(
+    Flashcard card,
+    FlashcardsProvider flashcardsProvider,
+  ) {
+    final words = _categoryWords(flashcardsProvider, card.category);
+    _startCategorySession(words, initial: card);
+  }
+
+  void _showNextWord(FlashcardsProvider flashcardsProvider) {
+    final selected = _selectedFlashcard;
+    if (selected == null) return;
+
+    final category = _activeCategory ?? selected.category;
+    final words = _remainingByCategory[category] ??
+        _categoryWords(flashcardsProvider, category)
+          ..removeWhere((word) => word.id == selected.id);
+
+    if (words.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No more new words in this category.')),
+      );
+      return;
+    }
+
+    final index = _random.nextInt(words.length);
+    final next = words.removeAt(index);
+
+    setState(() {
+      _selectedFlashcard = next;
+      _activeCategory = category;
+      _remainingByCategory[category] = words;
+    });
   }
 
   String _categoryIconAsset(String category) {
@@ -121,7 +196,9 @@ class _HomeState extends State<Home> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        drawer: AppDrawer(onWordSelected: _showFlashcard),
+        drawer: AppDrawer(
+          onWordSelected: (word) => _showWordFromDrawer(word, flashcardsProvider),
+        ),
         floatingActionButton: _selectedFlashcard != null
             ? FloatingActionButton(
                 onPressed: _showHome,
@@ -142,7 +219,36 @@ class _HomeState extends State<Home> {
               }
 
               if (_selectedFlashcard != null) {
-                return FlashcardView(card: _selectedFlashcard!);
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SingleChildScrollView(
+                      padding: const EdgeInsets.only(bottom: 24),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FlashcardView(card: _selectedFlashcard!),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                              child: SizedBox(
+                                width: 120,
+                                height: 40,
+                                child: ElevatedButton.icon(
+                                  onPressed: () => _showNextWord(flashcardsProvider),
+                                  icon: const Icon(Icons.navigate_next),
+                                  label: const Text('Next'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
               }
 
               final grouped = flashcardsProvider.groupedByCategory;
@@ -158,11 +264,7 @@ class _HomeState extends State<Home> {
                       context,
                       entry.key,
                       entry.value.length,
-                      () {
-                        final words = entry.value;
-                        final random = words[Random().nextInt(words.length)];
-                        _showFlashcard(random);
-                      },
+                      () => _startCategorySession(entry.value),
                     ),
                   ),
                   const SizedBox(height: 20),
