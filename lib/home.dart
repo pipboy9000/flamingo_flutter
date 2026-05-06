@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flamingo_flutter/app_drawer.dart';
@@ -5,6 +6,7 @@ import 'package:flamingo_flutter/database.dart';
 import 'package:flamingo_flutter/flashcard.dart';
 import 'package:flamingo_flutter/flashcards_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -18,9 +20,48 @@ class _HomeState extends State<Home> {
   static const double _categoryIconSize = 64;
   final Random _random = Random();
 
+  // TODO: Replace with your production ad unit IDs from the AdMob console.
+  // These are Google's test IDs — safe to use during development.
+  static String get _bannerAdUnitId {
+    if (Platform.isAndroid) {
+      return 'ca-app-pub-3940256099942544/6300978111';
+    } else if (Platform.isIOS) {
+      return 'ca-app-pub-3940256099942544/2934735716';
+    }
+    throw UnsupportedError('Unsupported platform for banner ads');
+  }
+
+  BannerAd? _bannerAd;
+  bool _isBannerAdReady = false;
+
   Flashcard? _selectedFlashcard;
   String? _activeCategory;
   final Map<String, List<Flashcard>> _remainingByCategory = {};
+
+  @override
+  void initState() {
+    super.initState();
+    if (Platform.isAndroid || Platform.isIOS) {
+      _bannerAd = BannerAd(
+        adUnitId: _bannerAdUnitId,
+        size: AdSize.banner,
+        request: const AdRequest(),
+        listener: BannerAdListener(
+          onAdLoaded: (_) => setState(() => _isBannerAdReady = true),
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+            _bannerAd = null;
+          },
+        ),
+      )..load();
+    }
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
 
   void _showFlashcard(Flashcard card) {
     setState(() {
@@ -100,6 +141,17 @@ class _HomeState extends State<Home> {
       _activeCategory = category;
       _remainingByCategory[category] = words;
     });
+  }
+
+  Widget? _buildBannerAd() {
+    if (!_isBannerAdReady || _bannerAd == null) return null;
+    return SafeArea(
+      child: SizedBox(
+        width: _bannerAd!.size.width.toDouble(),
+        height: _bannerAd!.size.height.toDouble(),
+        child: AdWidget(ad: _bannerAd!),
+      ),
+    );
   }
 
   String _categoryIconAsset(String category) {
@@ -206,6 +258,7 @@ class _HomeState extends State<Home> {
                 child: const Icon(Icons.home),
               )
             : null,
+        bottomNavigationBar: _buildBannerAd(),
         body: SafeArea(
           top: false,
           child: Builder(

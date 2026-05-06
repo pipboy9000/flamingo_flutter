@@ -2,10 +2,12 @@ import 'package:flamingo_flutter/database.dart';
 import 'package:flamingo_flutter/flashcards_provider.dart';
 import 'package:flamingo_flutter/home.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   final database = AppDatabase();
   await database.seedIfEmpty();
   runApp(
