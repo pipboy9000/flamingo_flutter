@@ -183,7 +183,7 @@ class _HomeState extends State<Home> {
             children: [
               Image.asset(
                 'images/logo.png',
-                height: 42,
+                height: 48,
                 fit: BoxFit.contain,
               ),
               const SizedBox(width: 12),
