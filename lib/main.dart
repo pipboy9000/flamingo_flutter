@@ -36,7 +36,7 @@ class FlamingoApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flamingo Spanish',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 51, 51, 51)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF333333)),
         scaffoldBackgroundColor: const Color.fromARGB(255, 62, 62, 62),
         cardColor: Colors.black87,
       ),
