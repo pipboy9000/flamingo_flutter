@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:flamingo_flutter/app_drawer.dart';
 import 'package:flamingo_flutter/database.dart';
 import 'package:flamingo_flutter/flashcard.dart';
@@ -20,11 +22,11 @@ class _HomeState extends State<Home> {
   static const double _categoryIconSize = 64;
   final Random _random = Random();
 
-  // TODO: Replace with your production ad unit IDs from the AdMob console.
-  // These are Google's test IDs — safe to use during development.
   static String get _bannerAdUnitId {
     if (Platform.isAndroid) {
-      return 'ca-app-pub-3940256099942544/6300978111';
+      return kReleaseMode
+          ? 'ca-app-pub-5313838936547493/1946703167'
+          : 'ca-app-pub-3940256099942544/6300978111';
     } else if (Platform.isIOS) {
       return 'ca-app-pub-3940256099942544/2934735716';
     }
@@ -255,6 +257,7 @@ class _HomeState extends State<Home> {
             ? FloatingActionButton(
                 onPressed: _showHome,
                 tooltip: 'Back to home',
+                backgroundColor: Colors.white,
                 child: const Icon(Icons.home),
               )
             : null,
