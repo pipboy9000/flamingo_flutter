@@ -57,3 +57,4 @@ pnpm-debug.log*
 
 # Local generated data/assets
 output/
+FlamingoKeystore.jks

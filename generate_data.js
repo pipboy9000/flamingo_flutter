@@ -33,7 +33,7 @@ async function generateData() {
           content: `You are a linguistic expert creating a Spanish learning dataset. 
           Return a JSON object with a key "sentences" containing 15 entries.
           Each entry must have:
-          - "original": The Spanish phrase.
+          - "original": The Spanish phrase. make sure this is pure Spanish without any English words.
           - "transliteration": Phonetic pronunciation.
           - "translated": English meaning.
           - "difficulty_level": Integer 1-5 (1=simple nouns, 5=complex sentences).
@@ -52,11 +52,11 @@ async function generateData() {
       for (const item of sentences) {
         // Create a unique slug for the filename
         const slug = item.original.toLowerCase().replace(/[^a-z]/g, '_').substring(0, 20);
-        const filename = `${category.replace(/\s/g, '_').toLowerCase()}_${slug}_${Date.now()}.mp3`;
+        const filename = `${category.replace(/\s/g, '_').toLowerCase()}_${slug}.mp3`;
         const filePath = path.join(AUDIO_DIR, filename);
 
         // 2. Generate the Audio
-        process.stdout.write(` 🔊 Audio: ${item.original.substring(0, 20)}... `);
+        process.stdout.write(` 🔊 Audio: ${item.original}`);
         const mp3 = await openai.audio.speech.create({
           model: "tts-1",
           voice: "shimmer", // Shimmer is clear and expressive
@@ -71,7 +71,7 @@ async function generateData() {
         dataset.push({
           ...item,
           category,
-          audio_path: `assets/audio/${filename}`,
+          audio_path: `audio/${filename}`,
           proficiency: 0.0
         });
       }
