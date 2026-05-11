@@ -58,3 +58,9 @@ pnpm-debug.log*
 # Local generated data/assets
 output/
 FlamingoKeystore.jks
+flamingo2
+
+# Android signing secrets
+android/key.properties
+*.jks
+*.keystore

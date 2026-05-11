@@ -1,0 +1,5 @@
+# Copy to android/key.properties and fill with your real values.
+storePassword=YOUR_STORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=upload
+storeFile=C:\\Users\\dan78\\keys\\flamingo-upload.jks
