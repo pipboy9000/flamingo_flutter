@@ -58,8 +58,9 @@ async function generateData() {
         // 2. Generate the Audio
         process.stdout.write(` 🔊 Audio: ${item.original}`);
         const mp3 = await openai.audio.speech.create({
-          model: "tts-1",
-          voice: "shimmer", // Shimmer is clear and expressive
+          model: "gpt-4o-mini-tts",
+          voice: "nova",
+          instructions: "Speak naturally in Latin American Spanish.",
           input: item.original,
         });
 

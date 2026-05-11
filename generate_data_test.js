@@ -20,8 +20,9 @@ async function generateData(str) {
     // 2. Generate the Audio
     // process.stdout.write(` 🔊 Audio: ${str}`);
     const mp3 = await openai.audio.speech.create({
-      model: "tts-1",
-      voice: "shimmer", // Shimmer is clear and expressive
+      model: "gpt-4o-mini-tts",
+      voice: "nova",
+      instructions: "Speak naturally in Latin American Spanish.",
       input: str,
     });
 
@@ -30,7 +31,7 @@ async function generateData(str) {
     console.log('✅');
 
   } catch (error) {
-    console.error(`❌ Error in category ${category}:`, error.message);
+    console.error(`❌ ${error.message}`);
   }
 }
 
