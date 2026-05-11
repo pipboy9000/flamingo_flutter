@@ -64,3 +64,4 @@ flamingo2
 android/key.properties
 *.jks
 *.keystore
+key.properties
