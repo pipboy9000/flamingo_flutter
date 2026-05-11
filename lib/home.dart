@@ -204,7 +204,7 @@ class _HomeState extends State<Home> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      '$wordCount words',
+                      '$wordCount cards',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
