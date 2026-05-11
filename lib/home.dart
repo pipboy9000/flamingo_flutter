@@ -39,6 +39,7 @@ class _HomeState extends State<Home> {
   Flashcard? _selectedFlashcard;
   String? _activeCategory;
   final Map<String, List<Flashcard>> _remainingByCategory = {};
+  final Map<String, List<Flashcard>> _historyByCategory = {};
 
   @override
   void initState() {
@@ -98,6 +99,7 @@ class _HomeState extends State<Home> {
       _selectedFlashcard = selected;
       _activeCategory = category;
       _remainingByCategory[category] = remaining;
+      _historyByCategory[category] = [selected];
     });
   }
 
@@ -137,11 +139,54 @@ class _HomeState extends State<Home> {
 
     final index = _random.nextInt(words.length);
     final next = words.removeAt(index);
+    final history = List<Flashcard>.from(_historyByCategory[category] ?? [selected]);
+
+    if (history.isEmpty || history.last.id != selected.id) {
+      history.add(selected);
+    }
+    history.add(next);
 
     setState(() {
       _selectedFlashcard = next;
       _activeCategory = category;
       _remainingByCategory[category] = words;
+      _historyByCategory[category] = history;
+    });
+  }
+
+  bool _canShowPreviousWord() {
+    final selected = _selectedFlashcard;
+    if (selected == null) return false;
+
+    final category = _activeCategory ?? selected.category;
+    final history = _historyByCategory[category];
+    return history != null && history.length > 1;
+  }
+
+  void _showPreviousWord() {
+    final selected = _selectedFlashcard;
+    if (selected == null) return;
+
+    final category = _activeCategory ?? selected.category;
+    final history = List<Flashcard>.from(_historyByCategory[category] ?? const []);
+
+    if (history.length <= 1) {
+      return;
+    }
+
+    final current = history.removeLast();
+    final previous = history.last;
+    final remaining = List<Flashcard>.from(_remainingByCategory[category] ?? const []);
+
+    if (!remaining.any((card) => card.id == current.id)) {
+      remaining.add(current);
+    }
+
+    setState(() {
+      _selectedFlashcard = previous;
+      _activeCategory = category;
+      _remainingByCategory[category] = remaining;
+      _historyByCategory[category] = history;
     });
   }
 
@@ -289,14 +334,31 @@ class _HomeState extends State<Home> {
                             FlashcardView(card: _selectedFlashcard!),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-                              child: SizedBox(
-                                width: 120,
-                                height: 40,
-                                child: ElevatedButton.icon(
-                                  onPressed: () => _showNextWord(flashcardsProvider),
-                                  icon: const Icon(Icons.navigate_next),
-                                  label: const Text('Next'),
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 120,
+                                    height: 40,
+                                    child: ElevatedButton.icon(
+                                      onPressed: _canShowPreviousWord()
+                                          ? _showPreviousWord
+                                          : null,
+                                      icon: const Icon(Icons.navigate_before),
+                                      label: const Text('Prev'),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  SizedBox(
+                                    width: 120,
+                                    height: 40,
+                                    child: ElevatedButton.icon(
+                                      onPressed: () => _showNextWord(flashcardsProvider),
+                                      icon: const Icon(Icons.navigate_next),
+                                      label: const Text('Next'),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
