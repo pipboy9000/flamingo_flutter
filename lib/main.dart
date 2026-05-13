@@ -35,6 +35,7 @@ class FlamingoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flamingo Spanish',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF333333)),
         scaffoldBackgroundColor: const Color.fromARGB(255, 62, 62, 62),
