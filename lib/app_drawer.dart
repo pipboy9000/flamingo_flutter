@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class _DrawerRow {
-  const _DrawerRow.header(this.category) : word = null;
-  const _DrawerRow.word(this.word) : category = null;
+  const _DrawerRow.header(this.category, this.firstWord) : word = null;
+  const _DrawerRow.word(this.word)
+      : category = null,
+        firstWord = null;
 
   final String? category;
   final Flashcard? word;
+  final Flashcard? firstWord;
 
   bool get isHeader => category != null;
 }
@@ -48,7 +51,7 @@ class AppDrawer extends StatelessWidget {
 
                 final rows = <_DrawerRow>[];
                 for (final entry in grouped.entries) {
-                  rows.add(_DrawerRow.header(entry.key));
+                  rows.add(_DrawerRow.header(entry.key, entry.value.first));
                   rows.addAll(entry.value.map(_DrawerRow.word));
                 }
 
@@ -57,14 +60,24 @@ class AppDrawer extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final row = rows[index];
                     if (row.isHeader) {
-                      return Container(
-                        padding: const EdgeInsets.fromLTRB(16, 10, 16, 6),
+                      return Material(
                         color: Theme.of(
                           context,
                         ).colorScheme.surfaceContainerHighest,
-                        child: Text(
-                          row.category!,
-                          style: Theme.of(context).textTheme.labelLarge,
+                        child: InkWell(
+                          onTap: () {
+                            final firstWord = row.firstWord;
+                            if (firstWord == null) return;
+                            Navigator.pop(context);
+                            onWordSelected(firstWord);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 10, 16, 6),
+                            child: Text(
+                              row.category!,
+                              style: Theme.of(context).textTheme.labelLarge,
+                            ),
+                          ),
                         ),
                       );
                     }
