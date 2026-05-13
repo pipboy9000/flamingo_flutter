@@ -21,8 +21,8 @@ async function generateData(str) {
     // process.stdout.write(` 🔊 Audio: ${str}`);
     const mp3 = await openai.audio.speech.create({
       model: "gpt-4o-mini-tts",
-      voice: "nova",
-      instructions: "Speak naturally in Latin American Spanish.",
+      voice: "shimmer",
+      instructions: "Speak naturally in Sindarin Elvish with a calm Finnish accent. Use appropriate intonation and rhythm to convey the meaning of the text.",
       input: str,
     });
 
@@ -35,4 +35,4 @@ async function generateData(str) {
   }
 }
 
-generateData("La comida está deliciosa.");
+generateData("Imay nallataq kashanki?");

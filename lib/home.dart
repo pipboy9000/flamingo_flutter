@@ -286,7 +286,7 @@ class _HomeState extends State<Home> {
                 fit: BoxFit.contain,
               ),
               const SizedBox(width: 12),
-              const Text('🇪🇸'),
+              const Text('🇧🇷'),
             ],
           ),
           titleTextStyle: TextStyle(

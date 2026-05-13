@@ -30,14 +30,14 @@ async function generateData() {
         model: "gpt-4o-mini",
         messages: [{
           role: "system",
-          content: `You are a linguistic expert creating a Spanish learning dataset. 
+          content: `You are a linguistic expert creating a Brazilian Portuguese learning dataset. 
           Return a JSON object with a key "sentences" containing 15 entries.
           Each entry must have:
-          - "original": The Spanish phrase. make sure this is pure Spanish without any English words.
+          - "original": The Brazilian Portuguese phrase. make sure this is pure Brazilian Portuguese without any English words.
           - "transliteration": Phonetic pronunciation.
           - "translated": English meaning.
           - "difficulty_level": Integer 1-5 (1=simple nouns, 5=complex sentences).
-          - "breakdown": A Map/Object where keys are Spanish words and values are English meanings.
+          - "breakdown": A Map/Object where keys are Brazilian Portuguese words and values are English meanings.
           
           Ensure a mix of difficulty levels: 20% level 1, 40% level 2-3, 40% level 4-5.`
         }, {
@@ -60,7 +60,7 @@ async function generateData() {
         const mp3 = await openai.audio.speech.create({
           model: "gpt-4o-mini-tts",
           voice: "nova",
-          instructions: "Speak naturally in Latin American Spanish.",
+          instructions: "Speak naturally in Brazilian Portuguese.",
           input: item.original,
         });
 
