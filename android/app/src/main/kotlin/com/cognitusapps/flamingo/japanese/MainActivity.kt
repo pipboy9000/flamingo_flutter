@@ -1,0 +1,5 @@
+package com.cognitusapps.flamingo.japanese
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
