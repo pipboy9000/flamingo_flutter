@@ -14,8 +14,8 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.cognitusapps.flamingo.portuguese"
-    compileSdk = flutter.compileSdkVersion
+    namespace = "com.cognitusapps.flamingo.chinese"
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     signingConfigs {
@@ -40,11 +40,11 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.cognitusapps.flamingo.portuguese"
+        applicationId = "com.cognitusapps.flamingo.chinese"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 24
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
