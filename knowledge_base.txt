@@ -1,0 +1,27 @@
+
+checklist for new language:
+    -package name
+    -app name
+    -top bar flag emoji (home.dart line 289)
+    -delete output folder
+    -generate data using generate_data.js
+    -update launcher icon
+    -run: dart run flutter_launcher_icons
+    -bump version if needed
+    -set up google ads
+    -update google ads ids (home.dart line 28)
+
+
+useful commands:
+    -create pem file: "C:\Program Files\Android\Android Studio\jbr\bin\java.exe" -jar pepk.jar --keystore=FlamingoKeystore.jks --alias=wordsmithkeystore --output=FlamingoKeystore.pem --rsa-aes-encryption --encryption-key-path=encryption_public_key.pem
+    -generate upload key: keytool -genkey -v -keystore user-upload-key.jks -alias user-upload-alias -keyalg RSA -keysize 2048 -validity 10000
+
+store stuff:
+    privacy policy: https://cognitusapps.github.io/flamingo_privacy.html
+    target audiance: ages 13+
+    data safety: use data_safety_export.csv
+
+    Store settings:
+        App or game: App
+        Category: Education
+        Tags :Language education
