@@ -25,10 +25,10 @@ class _HomeState extends State<Home> {
   static String get _bannerAdUnitId {
     if (Platform.isAndroid) {
       return kReleaseMode
-          ? 'ca-app-pub-5313838936547493/6508897052' //Change this when creating a new language
+          ? 'ca-app-pub-5313838936547493/1677188563' //Change this when creating a new language
           : 'ca-app-pub-3940256099942544/6300978111';
     } else if (Platform.isIOS) {
-      return 'ca-app-pub-5313838936547493/7027883173'; //Change this when creating a new language
+      return 'ca-app-pub-5313838936547493/8703585743'; //Change this when creating a new language
     }
     throw UnsupportedError('Unsupported platform for banner ads');
   }
@@ -286,7 +286,7 @@ class _HomeState extends State<Home> {
                 fit: BoxFit.contain,
               ),
               const SizedBox(width: 12),
-              const Text('🇯🇵'),
+              const Text('🇮🇹'),
             ],
           ),
           titleTextStyle: TextStyle(
@@ -306,7 +306,7 @@ class _HomeState extends State<Home> {
                 child: const Icon(Icons.home),
               )
             : null,
-        bottomNavigationBar: _buildBannerAd(),
+        // bottomNavigationBar: _buildBannerAd(),
         body: SafeArea(
           top: false,
           child: Builder(
