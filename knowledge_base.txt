@@ -27,3 +27,8 @@ store stuff:
         App or game: App
         Category: Education
         Tags :Language education
+
+TODOS:
+    missing ads:
+        japanese
+        portuguese
