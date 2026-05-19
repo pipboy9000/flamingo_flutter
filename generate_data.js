@@ -21,8 +21,8 @@ if (!fs.existsSync(AUDIO_DIR)) fs.mkdirSync(AUDIO_DIR, { recursive: true });
 async function generateData() {
   const dataset = [];
 
-  for (const category of CATEGORIES) {
-    console.log(`\n🚀 Processing Category: ${category}`);
+  for (const [idx, category] of CATEGORIES.entries()) {
+    console.log(`\n🚀 Processing Category: ${category} (${idx + 1}/${CATEGORIES.length})`);
 
     try {
       // 1. Request 15 structured sentences with difficulty scaling
@@ -30,14 +30,14 @@ async function generateData() {
         model: "gpt-4o-mini",
         messages: [{
           role: "system",
-          content: `You are a linguistic expert creating a Arabic learning dataset. 
+          content: `You are a linguistic expert creating a Hebrew learning dataset. 
           Return a JSON object with a key "sentences" containing 15 entries.
           Each entry must have:
-          - "original": The Arabic phrase. make sure this is pure Arabic without any English words.
+          - "original": The Hebrew phrase. make sure this is pure Hebrew without any English words.
           - "transliteration": Phonetic pronunciation.
           - "translated": English meaning.
           - "difficulty_level": Integer 1-5 (1=simple nouns, 5=complex sentences).
-          - "breakdown": A Map/Object where keys are Arabic words and values are English meanings.
+          - "breakdown": A Map/Object where keys are Hebrew words and values are English meanings.
           
           Ensure a mix of difficulty levels: 20% level 1, 40% level 2-3, 40% level 4-5 in ascending order. Avoid idioms or slang. Focus on practical, everyday phrases relevant to the category.`
         }, {
@@ -60,7 +60,7 @@ async function generateData() {
         const mp3 = await openai.audio.speech.create({
           model: "gpt-4o-mini-tts",
           voice: "nova",
-          instructions: "Speak naturally in Arabic.",
+          instructions: "Speak naturally in Hebrew.",
           input: item.original,
         });
 
@@ -83,7 +83,8 @@ async function generateData() {
 
   // 4. Save the Final JSON
   fs.writeFileSync(path.join(OUTPUT_DIR, 'dataset.json'), JSON.stringify(dataset, null, 2));
-  console.log(`\n🎉 SUCCESS: 225 items generated in /output`);
+
+  console.log(`\n🎉 SUCCESS: ${dataset.length} items generated in /output`);
 }
 
 generateData();

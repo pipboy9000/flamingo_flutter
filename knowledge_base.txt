@@ -12,6 +12,7 @@ checklist for new language:
     -set up google ads
     -update google ads ids (home.dart line 28)
     -flutter build apk
+    -copy output to drive/flamingo/data
 
 
 useful commands:
