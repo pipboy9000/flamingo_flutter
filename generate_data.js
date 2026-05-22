@@ -30,16 +30,14 @@ async function generateData() {
         model: "gpt-4o-mini",
         messages: [{
           role: "system",
-          content: `You are a linguistic expert creating a Hebrew learning dataset. 
+          content: `You are a linguistic expert creating a Hebrew learning dataset.
           Return a JSON object with a key "sentences" containing 15 entries.
-          Each entry must have:
+          Each entry must have: 
           - "original": The Hebrew phrase. make sure this is pure Hebrew without any English words.
           - "transliteration": Phonetic pronunciation.
           - "translated": English meaning.
           - "difficulty_level": Integer 1-5 (1=simple nouns, 5=complex sentences).
-          - "breakdown": A Map/Object where keys are Hebrew words and values are English meanings.
-          
-          Ensure a mix of difficulty levels: 20% level 1, 40% level 2-3, 40% level 4-5 in ascending order. Avoid idioms or slang. Focus on practical, everyday phrases relevant to the category.`
+          - "breakdown": A Map/Object where keys are Hebrew words with transliteration in parenthesis and values are English meanings. also add information about: gender, plural/singular if needed. Ensure a mix of difficulty levels: 20% level 1, 40% level 2-3, 40% level 4-5 in ascending order. Avoid idioms or slang. Focus on practical, everyday phrases relevant to the category.`
         }, {
           role: "user",
           content: `Category: ${category}`

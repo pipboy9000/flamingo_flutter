@@ -151,14 +151,12 @@ class _FlashcardViewState extends State<FlashcardView> {
                                                         .textTheme
                                                         .bodyLarge
                                                         ?.copyWith(
-                                                          color:
-                                                              Colors.black87,
+                                                          color: Colors.black87,
                                                           height: 1.4,
                                                         ),
                                                     children: [
                                                       TextSpan(
-                                                        text:
-                                                            '${entry.key}: ',
+                                                        text: '${entry.key}: ',
                                                         style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.w600,
@@ -184,8 +182,9 @@ class _FlashcardViewState extends State<FlashcardView> {
                       : Text(
                           'Tap to reveal',
                           key: const ValueKey('hidden'),
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(color: Colors.grey),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                         ),
                 ),
               ],
