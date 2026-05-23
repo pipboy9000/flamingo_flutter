@@ -11,6 +11,7 @@ checklist for new language:
     -bump version if needed
     -set up google ads
     -update google ads ids (home.dart line 28)
+    -update google ads app id (android: AndroidManifest.xml line 37)
     -flutter build apk
     -copy output to drive/flamingo/data
 
@@ -33,3 +34,5 @@ TODOS:
     missing ads:
         japanese
         portuguese
+    
+    forgot to update admob app id for all apps except russian :( need to make new releases 
