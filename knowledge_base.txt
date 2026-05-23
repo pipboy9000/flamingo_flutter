@@ -35,4 +35,4 @@ TODOS:
         japanese
         portuguese
     
-    forgot to update admob app id for all apps except russian :( need to make new releases 
+    forgot to update admob app id for all apps except Vietnamese :( need to make new releases 
