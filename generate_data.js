@@ -30,14 +30,14 @@ async function generateData() {
         model: "gpt-4o-mini",
         messages: [{
           role: "system",
-          content: `You are a linguistic expert creating a Russian learning dataset.
+          content: `You are a linguistic expert creating a Vietnamese learning dataset.
           Return a JSON object with a key "sentences" containing 15 entries.
           Each entry must have: 
-          - "original": The Russian phrase. make sure this is pure Russian without any English words.
+          - "original": The Vietnamese phrase. make sure this is pure Vietnamese without any English words.
           - "transliteration": Phonetic pronunciation.
           - "translated": English meaning.
           - "difficulty_level": Integer 1-5 (1=simple nouns, 5=complex sentences).
-          - "breakdown": A Map/Object where keys are Russian words with transliteration in parenthesis and values are English meanings. also add information about: gender, plural/singular if needed. Ensure a mix of difficulty levels: 20% level 1, 40% level 2-3, 40% level 4-5 in ascending order. Avoid idioms or slang. Focus on practical, everyday phrases relevant to the category.`
+          - "breakdown": A Map/Object where keys are Vietnamese words with transliteration in parenthesis and values are English meanings with information about: gender, plural/singular if needed. Ensure a mix of difficulty levels: 20% level 1, 40% level 2-3, 40% level 4-5 in ascending order. Avoid idioms or slang. Focus on practical, everyday phrases relevant to the category.`
         }, {
           role: "user",
           content: `Category: ${category}`
@@ -58,7 +58,7 @@ async function generateData() {
         const mp3 = await openai.audio.speech.create({
           model: "gpt-4o-mini-tts",
           voice: "nova",
-          instructions: "Speak naturally in Russian.",
+          instructions: "Speak naturally in Vietnamese.",
           input: item.original,
         });
 

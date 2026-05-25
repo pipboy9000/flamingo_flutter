@@ -8,18 +8,21 @@ plugins {
 import java.util.Properties
 
 val keystoreProperties = Properties()
-val keystorePropertiesFile = rootProject.file("key.properties")
-if (keystorePropertiesFile.exists()) {
+val keystorePropertiesFile = sequenceOf(
+    rootProject.file("key.properties"),
+    rootProject.file("../key.properties"),
+).firstOrNull { it.exists() }
+if (keystorePropertiesFile != null) {
     keystorePropertiesFile.inputStream().use { keystoreProperties.load(it) }
 }
 
 android {
-    namespace = "com.cognitusapps.flamingo.russian"
+    namespace = "com.cognitusapps.flamingo.vietnamese"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     signingConfigs {
-        if (keystorePropertiesFile.exists()) {
+        if (keystorePropertiesFile != null) {
             create("release") {
                 keyAlias = keystoreProperties["keyAlias"] as String
                 keyPassword = keystoreProperties["keyPassword"] as String
@@ -40,7 +43,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.cognitusapps.flamingo.russian"
+        applicationId = "com.cognitusapps.flamingo.vietnamese"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 24
@@ -51,7 +54,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = if (keystorePropertiesFile.exists()) {
+            signingConfig = if (keystorePropertiesFile != null) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
