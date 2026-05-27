@@ -3,6 +3,7 @@ checklist for new language:
     -package name
     -app name
     -top bar flag emoji (home.dart line 289)
+    -set text direction if needed (flashcard.dart line 84)
     -delete output folder
     -update generate_data.js to output specific language
     -generate data using generate_data.js
@@ -12,7 +13,7 @@ checklist for new language:
     -set up google ads
     -update google ads ids (home.dart line 28)
     -update google ads app id (android: AndroidManifest.xml line 37)
-    -flutter build apk
+    -flutter build appbundle --release
     -copy output to drive/flamingo/data
 
 

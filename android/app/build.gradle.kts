@@ -17,7 +17,7 @@ if (keystorePropertiesFile != null) {
 }
 
 android {
-    namespace = "com.cognitusapps.flamingo.vietnamese"
+    namespace = "com.cognitusapps.flamingo.hebrew"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
@@ -43,7 +43,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.cognitusapps.flamingo.vietnamese"
+        applicationId = "com.cognitusapps.flamingo.hebrew"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 24

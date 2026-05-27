@@ -1,4 +1,4 @@
-package com.cognitusapps.flamingo.vietnamese
+package com.cognitusapps.flamingo.hebrew
 
 import io.flutter.embedding.android.FlutterActivity
 

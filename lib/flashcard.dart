@@ -81,6 +81,7 @@ class _FlashcardViewState extends State<FlashcardView> {
                   card.original,
                   style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center,
+                  textDirection: TextDirection.rtl,
                 ),
                 if (card.transliteration.isNotEmpty) ...[
                   const SizedBox(height: 8),

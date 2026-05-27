@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
   static String get _bannerAdUnitId {
     if (Platform.isAndroid) {
       return kReleaseMode
-          ? 'ca-app-pub-5313838936547493/8827461409' //Change this when creating a new language
+          ? 'ca-app-pub-5313838936547493/7772910761' //Change this when creating a new language
           : 'ca-app-pub-3940256099942544/6300978111';
     } else if (Platform.isIOS) {
       return 'ca-app-pub-5313838936547493/1493416775'; //Change this when creating a new language
@@ -286,7 +286,7 @@ class _HomeState extends State<Home> {
                 fit: BoxFit.contain,
               ),
               const SizedBox(width: 12),
-              const Text('🇻🇳'),
+              const Text('🇮🇱'),
             ],
           ),
           titleTextStyle: TextStyle(
