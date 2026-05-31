@@ -3,7 +3,7 @@ checklist for new language:
     -package name
     -app name
     -top bar flag emoji (home.dart line 289)
-    -set text direction if needed (flashcard.dart line 84)
+    -set text direction if needed (flashcard.dart line 84, app_drawer.dart line 87)
     -delete output folder
     -update generate_data.js to output specific language
     -generate data using generate_data.js
@@ -36,4 +36,4 @@ TODOS:
         japanese
         portuguese
     
-    forgot to update admob app id for all apps except Vietnamese :( need to make new releases 
+    forgot to update admob app id for all apps except hebrew :( need to make new releases 

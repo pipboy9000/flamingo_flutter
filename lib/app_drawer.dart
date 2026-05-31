@@ -84,8 +84,8 @@ class AppDrawer extends StatelessWidget {
 
                     final word = row.word!;
                     return ListTile(
-                      title: Text(word.original),
-                      // subtitle: Text(word.translated),
+                      title: Text(word.original, textDirection: TextDirection.rtl),
+                      subtitle: Text(word.translated),
                       onTap: () {
                         Navigator.pop(context);
                         onWordSelected(word);
